@@ -2,6 +2,23 @@
 
 Định dạng theo [Keep a Changelog]. Ngày: YYYY-MM-DD.
 
+## [1.3.1] — 2026-07-04
+### Changed
+- Tách `index.html`: CSS → `css/style.css`, JS → `js/app.js`. HTML chỉ còn markup + `<link>`/`<script src>`. Không đổi logic, verify chạy đúng.
+
+## [1.3.0] — 2026-07-04
+### Changed — Redesign UX (theo 100 UX tips của Intechnic)
+- **Visibility of system status**: thêm **topbar** hiện tên + mô tả tool đang mở, cập nhật theo nav.
+- **Recognition of location**: nav active có thanh accent bên trái + icon phát sáng.
+- **Fitts's law**: mọi target ≥ 44px (nav, input, button); button phụ ≥ 38–40px.
+- **Contrast (WCAG AA)**: muted `#8b949e → #a3adbb`, text sáng hơn, accent `#2f81f7 → #4c9dff`.
+- **Visual hierarchy**: type scale rõ hơn (topbar 24px, card title 17px), input 16px (chống zoom iOS).
+- **Spacing rhythm**: token 8px (`--s1..--s6`) áp dụng nhất quán.
+- **Feedback**: button có active-press + shadow động, card hover nâng, focus-visible ring.
+- **Output vs input**: result chip có viền accent trái + value 24px đậm để phân biệt kết quả.
+- **Accessibility**: `prefers-reduced-motion` tắt animation; subtab gộp thành segmented control.
+- Đồng bộ palette mới sang `docs.html`.
+
 ## [1.2.2] — 2026-07-04
 ### Added
 - Favicon cho `index.html` + `docs.html`. Rename 4 icon trong `res/`: `tool-box (1..4).png` → `favicon-{32,64,256,512}x{...}.png` (theo kích thước thật), 512 dùng apple-touch-icon.
