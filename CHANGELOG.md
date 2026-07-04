@@ -7,6 +7,7 @@
 - Favicon cho `index.html` + `docs.html`. Rename 4 icon trong `res/`: `tool-box (1..4).png` → `favicon-{32,64,256,512}x{...}.png` (theo kích thước thật), 512 dùng apple-touch-icon.
 ### Changed
 - Logo web (sidebar + docs header) đổi từ chữ "MT" sang ảnh `res/favicon-256x256.png`.
+- Âm Lịch: ô nhập ngày đổi từ `type=date` sang text **dd/mm/yyyy** (có validate, tính lại khi gõ).
 
 ## [1.2.1] — 2026-07-04
 ### Changed

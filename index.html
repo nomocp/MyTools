@@ -433,7 +433,7 @@
       <h2>Âm Dương Lịch</h2>
       <p class="sub">Đổi dương → âm, can chi năm/tháng/ngày (múi giờ VN +7).</p>
       <div class="grid">
-        <div class="field"><label>Ngày dương lịch</label><input id="al_date" type="date"></div>
+        <div class="field"><label>Ngày dương lịch (dd/mm/yyyy)</label><input id="al_date" type="text" placeholder="dd/mm/yyyy" inputmode="numeric" maxlength="10"></div>
         <div class="field" style="justify-content:flex-end"><button class="btn" id="al_today" style="margin:0">Hôm nay</button></div>
       </div>
       <div class="results" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
@@ -862,12 +862,24 @@ function renderCalendar(yy, mm, selDate) {
   $('cal_next').addEventListener('click', () => { let m = calM + 1, y = calY; if (m > 12) { m = 1; y++; } renderCalendar(y, m); });
 }
 
+function fmtDMY(d) {
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+}
+function parseDMY(s) {
+  const m = s.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{3,4})$/);
+  if (!m) return null;
+  const dd = +m[1], mm = +m[2], yy = +m[3];
+  if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return null;
+  const d = new Date(yy, mm - 1, dd);
+  if (d.getDate() !== dd || d.getMonth() !== mm - 1) return null;
+  return d;
+}
 function setAlToday() {
   const t = new Date();
-  $('al_date').value = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+  $('al_date').value = fmtDMY(t);
   renderAmlich(t);
 }
-$('al_date').addEventListener('change', () => { const v = $('al_date').value; if (v) renderAmlich(new Date(v + 'T00:00:00')); });
+$('al_date').addEventListener('input', () => { const d = parseDMY($('al_date').value); if (d) renderAmlich(d); });
 $('al_today').addEventListener('click', setAlToday);
 setAlToday();
 
