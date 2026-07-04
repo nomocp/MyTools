@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyTools — Tài liệu</title>
+<link rel="icon" type="image/png" sizes="32x32" href="res/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="res/favicon-64x64.png">
+<link rel="icon" type="image/png" sizes="256x256" href="res/favicon-256x256.png">
+<link rel="apple-touch-icon" sizes="512x512" href="res/favicon-512x512.png">
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--panel-2:#1c2230;--border:#2a3140;--text:#e6edf3;--muted:#8b949e;--accent:#2f81f7;--accent-2:#3fb950;--radius:12px;--shadow:0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:radial-gradient(1200px 600px at 20% -10%,#17233b 0%,var(--bg) 55%);color:var(--text);min-height:100vh;padding:32px 18px 70px}
+  .container{max-width:920px;margin:0 auto}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .logo{width:46px;height:46px;border-radius:12px;object-fit:cover;display:block;box-shadow:var(--shadow)}
+  header h1{font-size:24px}
+  header p{color:var(--muted);font-size:13px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 26px}
+  .bar a{padding:9px 16px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600;border:1px solid var(--border);color:var(--text);background:var(--panel);transition:.15s}
+  .bar a:hover{background:var(--panel-2)}
+  .bar a.primary{background:linear-gradient(135deg,var(--accent),#4c9dff);color:#061018;border:none}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
+  .card h2{font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+  .card .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+  h3{font-size:14px;color:var(--accent-2);margin:14px 0 8px}
+  p,li{font-size:14px;line-height:1.75;color:var(--text)}
+  ul{padding-left:20px;color:var(--muted)}
+  ul b{color:var(--text)}
+  code,pre{font-family:"Cascadia Code",Consolas,monospace}
+  pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;color:#9fd0ff;overflow-x:auto;margin:8px 0}
+  code{background:var(--panel-2);padding:2px 6px;border-radius:5px;font-size:13px;color:#9fd0ff}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+  th{background:var(--panel-2);color:var(--accent-2)}
+  .tag{display:inline-block;font-size:11px;background:var(--panel-2);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:20px;margin-left:auto}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <img class="logo" src="res/favicon-256x256.png" alt="MyTools logo">
+    <div><h1>MyTools — Tài liệu</h1><p>Trading toolkit · công thức & cách dùng</p></div>
+  </header>
+  <div class="bar">
+    <a class="primary" href="index.html">▶ Mở Toolkit</a>
+    <a href="HDSD.md">📖 HDSD</a>
+    <a href="CHANGELOG.md">📝 Changelog</a>
+  </div>
+
+  <div class="card">
+    <h2>💰 Commission <span class="tag">CommissionCalc/main.cpp</span></h2>
+    <p class="sub">Phí commission và point tối thiểu để hòa/thắng.</p>
+    <table>
+      <tr><th>Input</th><th>Ý nghĩa</th></tr>
+      <tr><td>Tick Price</td><td>Giá trị tiền của 1 point</td></tr>
+      <tr><td>Commission / 1 Lot</td><td>Phí broker trên 1 lot</td></tr>
+      <tr><td>Lot Size</td><td>Khối lượng lệnh</td></tr>
+    </table>
+    <pre>commission = (comPerLot * 0.01) * (lotSize / 0.01)
+minPoint   = commission / tickPrice + 1   // floor 2 số lẻ</pre>
+  </div>
+
+  <div class="card">
+    <h2>📊 Risk / Reward <span class="tag">RR Winrate calc/main.py</span></h2>
+    <p class="sub">Kỳ vọng lợi nhuận và win rate tối thiểu.</p>
+    <h3>Profit theo Win Rate</h3>
+    <pre>profit = winRate * reward − (1 − winRate) * risk   // đơn vị R</pre>
+    <h3>Min Win Rate cần thiết</h3>
+    <pre>minWinRate = (profit + risk) / (reward + risk)</pre>
+    <p style="color:var(--muted)">VD: R:R = 1:9, muốn +1R/lệnh → cần win rate ≥ <b style="color:var(--text)">20%</b>.</p>
+  </div>
+
+  <div class="card">
+    <h2>📈 Lãi Kép <span class="tag">Laikep/</span></h2>
+    <p class="sub">Lãi kép có nạp thêm & rút; hoặc tính ngược từ mục tiêu.</p>
+    <h3>a) Lãi kép + Rút</h3>
+    <ul>
+      <li><b>Số kỳ thêm = -1</b> → nạp thêm suốt kỳ hạn</li>
+      <li>Bảng: Kỳ · Vốn · Tổng Lãi · Rút + thống kê tổng</li>
+    </ul>
+    <h3>b) Từ Mục Tiêu</h3>
+    <pre>dailyFactor = (target / initial) ^ (1 / days)
+% mỗi kỳ    = (dailyFactor − 1) * 100</pre>
+    <p style="color:var(--muted)">Quy ước: 1 năm = 52 tuần / 260 ngày; 1 tháng = 24 ngày. Ô Mục Tiêu ↔ % liên kết 2 chiều.</p>
+  </div>
+
+  <div class="card">
+    <h2>% Percentage <span class="tag">calculator.net</span></h2>
+    <p class="sub">3 dạng cơ bản + change + difference. Live-calc.</p>
+    <table>
+      <tr><th>Dạng</th><th>Công thức</th></tr>
+      <tr><td>P% của B</td><td><code>P/100 * B</code></td></tr>
+      <tr><td>A là bao nhiêu % của B</td><td><code>A/B * 100</code></td></tr>
+      <tr><td>A là P% của số nào</td><td><code>A / (P/100)</code></td></tr>
+    </table>
+    <pre>change = (V₂ − V₁) / |V₁| * 100
+diff   = |V₁ − V₂| / |(V₁ + V₂) / 2| * 100</pre>
+  </div>
+
+  <div class="card">
+    <h2>⚖️ BMI <span class="tag">calculator.net</span></h2>
+    <p class="sub">Chỉ số khối cơ thể — Metric (cm/kg) & US (ft·in/lb).</p>
+    <pre>BMI = kg / (m)²</pre>
+    <table>
+      <tr><th>BMI</th><th>Phân loại</th></tr>
+      <tr><td>&lt; 18.5</td><td>Gầy</td></tr>
+      <tr><td>18.5 – 24.9</td><td>Bình thường</td></tr>
+      <tr><td>25 – 29.9</td><td>Thừa cân</td></tr>
+      <tr><td>≥ 30</td><td>Béo phì</td></tr>
+    </table>
+    <p style="color:var(--muted)">Kèm khoảng cân nặng khỏe mạnh (BMI 18.5–25) + thanh scale vị trí.</p>
+  </div>
+
+  <div class="card">
+    <h2>🌙 Âm Dương Lịch <span class="tag">Hồ Ngọc Đức · offline</span></h2>
+    <p class="sub">Đổi dương → âm, can chi, giờ 12 con giáp, lịch tháng. Thuần JS, không API.</p>
+    <ul>
+      <li>Can chi <b>năm / tháng / ngày</b> + tiết khí (múi giờ VN +7)</li>
+      <li>Bảng <b>12 giờ con giáp</b> — can chi từng khung 2 giờ</li>
+      <li>Lịch tháng grid: ngày dương + ngày âm, điều hướng ‹ ›</li>
+      <li>Verified: Tết Canh Tý / Giáp Ngọ / Giáp Thìn khớp chính xác</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔤 Text Counter + Case <span class="tag">wordcounter.net · caseconverter.cc</span></h2>
+    <p class="sub">Đếm ký tự/từ/câu/đoạn/dòng + đổi kiểu chữ.</p>
+    <ul>
+      <li>Ký tự · không dấu cách · từ · câu (<code>.!?…</code>) · đoạn · dòng · thời gian đọc</li>
+      <li>Convert: <b>UPPER · lower · Sentence · Title · aLtErNaTiNg · InVeRsE</b></li>
+    </ul>
+  </div>
+
+  <footer>MyTools v1.2.0 · single-file, thuần client-side, deploy GitHub Pages</footer>
+</div>
+</body>
+</html>
