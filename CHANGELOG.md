@@ -2,6 +2,15 @@
 
 Định dạng theo [Keep a Changelog]. Ngày: YYYY-MM-DD.
 
+## [1.4.0] — 2026-07-04
+### Changed — Responsive mobile/tablet
+- Nav bọc trong `<nav class="navlist">`.
+- **Tablet (≤1024px)**: sidebar hẹp lại 216px.
+- **Mobile (≤760px)**: sidebar → top bar; nav thành **thanh cuộn ngang** (scroll-snap, không wrap), tab dạng pill; topbar/card thu gọn.
+- **Phone (≤480px)**: input grid xếp 1 cột, result chip 2 cột, `.pc-line` stack full-width, bảng + lịch âm co lại (cell 44px), subtab full-width.
+- Fix thứ tự CSS: dồn toàn bộ media query xuống cuối file để override thắng base rule (trước đó base đặt sau nên đè mất responsive).
+- Verify: 375px không tràn ngang, nav cuộn được; 1280px giữ nguyên sidebar/active-bar/3-cột.
+
 ## [1.3.1] — 2026-07-04
 ### Changed
 - Tách `index.html`: CSS → `css/style.css`, JS → `js/app.js`. HTML chỉ còn markup + `<link>`/`<script src>`. Không đổi logic, verify chạy đúng.
