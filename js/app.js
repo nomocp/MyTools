@@ -103,8 +103,9 @@ $('lk_submit').addEventListener('click', () => {
   const startWithdraw = parseInt($('lk_startWithdraw').value) - 1;
   if (addingNum === -1) addingNum = period;
 
-  let rows = '<thead><tr><th>Kỳ</th><th>Vốn</th><th>Tổng Lãi</th><th>Rút</th></tr></thead><tbody>';
+  let rows = '<thead><tr><th>Kỳ</th><th>Vốn</th><th>Tổng Lãi</th><th>Rút</th><th>Chênh Lệch Vốn</th></tr></thead><tbody>';
   let totalProfit = 0, totalBank = 0, allDeposit = firstMoney;
+  let prevMoney = firstMoney;                 // kỳ 1 so với vốn ban đầu
 
   function step(time) {
     let m = money, bank = 0, addingMoney = 0;
@@ -119,7 +120,10 @@ $('lk_submit').addEventListener('click', () => {
     }
     allDeposit += addingMoney;
     const gain = ((m - firstMoney - adding * (time - 1)) * 100 / firstMoney).toFixed(2);
-    rows += `<tr><td>${time}</td><td>${commas(m.toFixed(2))}</td><td>${commas(gain)}%</td><td>${commas(bank.toFixed(2))}</td></tr>`;
+    const diff = m - prevMoney;
+    prevMoney = m;
+    const diffTxt = (diff >= 0 ? '+' : '−') + commas(Math.abs(diff).toFixed(2));
+    rows += `<tr><td>${time}</td><td>${commas(m.toFixed(2))}</td><td>${commas(gain)}%</td><td>${commas(bank.toFixed(2))}</td><td class="${diff >= 0 ? 'td-pos' : 'td-neg'}">${diffTxt}</td></tr>`;
   }
   // reset accumulators per full run
   totalBank = 0;
