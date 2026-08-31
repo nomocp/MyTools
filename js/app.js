@@ -5,8 +5,7 @@ const num = v => parseFloat(v) || 0;
 
 // ---------- tabs ----------
 const TOOLMETA = {
-  commission: ['💰', 'Commission', 'Phí commission & point tối thiểu để thắng'],
-  rr: ['📊', 'Risk / Reward', 'Kỳ vọng lợi nhuận & win rate tối thiểu'],
+  trading: ['💰', 'Trading Calculator', 'Commission, kỳ vọng lợi nhuận & win rate tối thiểu'],
   laikep: ['📈', 'Lãi Kép', 'Mô phỏng lãi kép, nạp/rút & tính từ mục tiêu'],
   percent: ['%', 'Percentage', 'Phần trăm cơ bản, thay đổi & chênh lệch'],
   bmi: ['⚖️', 'BMI', 'Chỉ số khối cơ thể & phân loại sức khỏe'],
